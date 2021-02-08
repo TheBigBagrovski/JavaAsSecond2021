@@ -3,6 +3,6 @@ package exercise1;
 public class Main {
 
     public static void main(String[] args) {
-	// здесь будет первое задание
+        System.out.println("Hello, Binary Tree!");
     }
 }
