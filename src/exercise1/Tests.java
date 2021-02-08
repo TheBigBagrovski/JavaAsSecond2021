@@ -3,7 +3,7 @@ package exercise1;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class UserTest {
+public class Tests {
 
     @Test
     public void Test1() {
