@@ -158,4 +158,29 @@ class Node {
         this.leftChild = leftChild;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj instanceof Node) {
+            Node other = (Node) obj;
+            return value == other.value && leftChild == other.leftChild && rightChild == other.rightChild;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        final int x = 31;
+        int result = 1;
+        result = x * result + value;
+        result = x * result + leftChild.value;
+        result = x * result + rightChild.value;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Value: " + value + "\nLeftChild: " + leftChild.value + "\nRightChild: " + rightChild.value;
+    }
+
 }
