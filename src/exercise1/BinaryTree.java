@@ -8,14 +8,14 @@ public final class BinaryTree {
         this.root = root;
     }
 
-    public Node Search(int value) { //поиск числа в дереве
+    public Node Search(int value) { //поиск узла в дереве
         Node currentNode = root;
         while (currentNode.getValue() != value) {
             if (value < currentNode.getValue())
                 currentNode = currentNode.getLeftChild();
             else
                 currentNode = currentNode.getRightChild();
-            if (currentNode == null) return null;
+            if (currentNode == null) throw new IllegalStateException("Node not found!");
         }
         return currentNode;
     }
@@ -46,7 +46,7 @@ public final class BinaryTree {
 
     private Node FindHeir(Node newRoot) { //функция поиска преемника для случая с двумя потомками
         //преемником является либо правый потомок удаляемого узла (newRoot),
-        //либо один из его (newRoot'а) левых потомков
+        //либо один из его левых потомков
         Node heirParent = null;
         Node heir = null;
         Node currentNode = newRoot;
@@ -67,7 +67,7 @@ public final class BinaryTree {
 
     public void Remove(int value) { //удаление числа
         Node removingNode = root;
-        Node parentNode = null;
+        Node parentNode = root;
         //удаление узла - обращение в null левого или правого потомка parentNode
         while (removingNode.getValue() != value) { //
             parentNode = removingNode;
@@ -75,7 +75,9 @@ public final class BinaryTree {
                 removingNode = removingNode.getLeftChild();
             else
                 removingNode = removingNode.getRightChild();
-            if (removingNode == null) System.out.println("Node not found");
+            if (removingNode == null) {
+                throw new IllegalStateException("Node not found!");
+            }
         }
         //removingNode - удаляемый узел
         //случай, когда у удаляемого узла нет потомков
@@ -83,7 +85,7 @@ public final class BinaryTree {
             //если removingNode - корневой, то через parentNode на него сослаться не удастся
             //проверяем этот случай отдельно
             if (root == removingNode) root = null;
-            else if (parentNode.getLeftChild().getValue() == value) parentNode.setLeftChild(null);
+            else if (parentNode.getLeftChild() == removingNode) parentNode.setLeftChild(null);
             else parentNode.setRightChild(null);
         else if (removingNode.getRightChild() == null) //случай, когда у удаляемого узла есть левый потомок
             if (root == removingNode) root = removingNode.getLeftChild();
@@ -103,11 +105,15 @@ public final class BinaryTree {
     }
 
     public Node FindLeftChild(int value) {
-        return Search(value).getLeftChild();
+        Node node = Search(value);
+        if (node == null) throw new IllegalStateException("Node not found!");
+        else return node.getLeftChild();
     }
 
     public Node FindRightChild(int value) {
-        return Search(value).getRightChild();
+        Node node = Search(value);
+        if (node == null) throw new IllegalStateException("Node not found!");
+        else return node.getRightChild();
     }
 
     public Node FindParent(int value) {
@@ -119,7 +125,7 @@ public final class BinaryTree {
                 currentNode = currentNode.getLeftChild();
             else
                 currentNode = currentNode.getRightChild();
-            if (currentNode == null) return null;
+            if (currentNode == null) throw new IllegalStateException("Node not found!");
         }
         return prevNode;
     }
@@ -163,7 +169,8 @@ class Node {
         if (this == obj) return true;
         if (obj instanceof Node) {
             Node other = (Node) obj;
-            return value == other.value && leftChild == other.leftChild && rightChild == other.rightChild;
+            return value == other.value && leftChild.getValue() == other.leftChild.getValue() &&
+                    rightChild.getValue() == other.rightChild.getValue();
         }
         return false;
     }
