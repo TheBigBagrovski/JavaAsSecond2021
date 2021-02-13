@@ -3,5 +3,3 @@ exercise1/BinaryTree.java
  exercise1.Node
 exercise1/Tests.java
  exercise1.Tests
-exercise1/Main.java
- exercise1.Main

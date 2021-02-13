@@ -169,8 +169,7 @@ class Node {
         if (this == obj) return true;
         if (obj instanceof Node) {
             Node other = (Node) obj;
-            return value == other.value && leftChild.getValue() == other.leftChild.getValue() &&
-                    rightChild.getValue() == other.rightChild.getValue();
+            return this.value == other.value;
         }
         return false;
     }
