@@ -8,7 +8,7 @@ public final class BinaryTree {
         this.root = root;
     }
 
-    public Node Search(int value) { //поиск узла в дереве
+    public Node search(int value) { //поиск узла в дереве
         Node currentNode = root;
         while (currentNode.getValue() != value) {
             if (value < currentNode.getValue())
@@ -20,7 +20,7 @@ public final class BinaryTree {
         return currentNode;
     }
 
-    public void Insert(int value) { //добавление числа
+    public void insert(int value) { //добавление числа
         Node prevNode;
         if (root == null) root = new Node(value);
         else {
@@ -44,7 +44,7 @@ public final class BinaryTree {
         }
     }
 
-    private Node FindHeir(Node newRoot) { //функция поиска преемника для случая с двумя потомками
+    private Node findHeir(Node newRoot) { //функция поиска преемника для случая с двумя потомками
         //преемником является либо правый потомок удаляемого узла (newRoot),
         //либо один из его левых потомков
         Node heirParent = null;
@@ -65,7 +65,7 @@ public final class BinaryTree {
         return heir;
     }
 
-    public void Remove(int value) { //удаление числа
+    public void remove(int value) { //удаление числа
         Node removingNode = root;
         Node parentNode = root;
         //удаление узла - обращение в null левого или правого потомка parentNode
@@ -96,7 +96,7 @@ public final class BinaryTree {
             else if (parentNode.getLeftChild() == removingNode) parentNode.setLeftChild(removingNode.getRightChild());
             else parentNode.setRightChild(removingNode.getRightChild());
         else {   //случай, когда у удаляемого узла есть оба потомка
-            Node heir = FindHeir(removingNode.getRightChild()); //находим преемника
+            Node heir = findHeir(removingNode.getRightChild()); //находим преемника
             if (removingNode == root) root = heir;
             else if (parentNode.getLeftChild() == removingNode) parentNode.setLeftChild(heir);
             else parentNode.setRightChild(heir);
@@ -104,19 +104,19 @@ public final class BinaryTree {
         }
     }
 
-    public Node FindLeftChild(int value) {
-        Node node = Search(value);
+    public Node findLeftChild(int value) {
+        Node node = search(value);
         if (node == null) throw new IllegalStateException("Node not found!");
         else return node.getLeftChild();
     }
 
-    public Node FindRightChild(int value) {
-        Node node = Search(value);
+    public Node findRightChild(int value) {
+        Node node = search(value);
         if (node == null) throw new IllegalStateException("Node not found!");
         else return node.getRightChild();
     }
 
-    public Node FindParent(int value) {
+    public Node findParent(int value) {
         Node prevNode = null;
         Node currentNode = root;
         while (currentNode.getValue() != value) {
@@ -169,7 +169,12 @@ class Node {
         if (this == obj) return true;
         if (obj instanceof Node) {
             Node other = (Node) obj;
-            return this.value == other.value;
+            if (leftChild == null && other.leftChild != null || leftChild != null && other.leftChild == null)
+                return false;
+            if (rightChild == null && other.rightChild != null || rightChild != null && other.rightChild == null)
+                return false;
+            return value == other.value && (leftChild == null || leftChild.value == other.leftChild.value)
+                    && (rightChild == null || rightChild.value == other.rightChild.value);
         }
         return false;
     }
@@ -186,7 +191,12 @@ class Node {
 
     @Override
     public String toString() {
-        return "Value: " + value + "\nLeftChild: " + leftChild.value + "\nRightChild: " + rightChild.value;
+        String output = "Value: " + value;
+        if (leftChild != null) output += "\nLeftChild: " + leftChild.value;
+        else output += "\nNo left child";
+        if (rightChild != null) output += "\nRightChild: " + rightChild.value;
+        else output += "\nNo right child";
+        return output;
     }
 
 }

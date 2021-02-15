@@ -5,26 +5,26 @@ import org.junit.Test;
 
 public class Tests {
 
-    public BinaryTree CreateEmptyTree(int value) {
+    public BinaryTree createEmptyTree(int value) {
         return (new BinaryTree(new Node(value)));
     }
 
-    public BinaryTree CreateFilledTree() {
-        BinaryTree tree = CreateEmptyTree(50);
-        tree.Insert(25);
-        tree.Insert(35);
-        tree.Insert(15);
-        tree.Insert(75);
-        tree.Insert(65);
-        tree.Insert(85);
-        tree.Insert(100);
-        tree.Insert(105);
-        tree.Insert(110);
-        tree.Insert(115);
-        tree.Insert(10);
-        tree.Insert(52);
-        tree.Insert(1);
-        tree.Insert(113);
+    public BinaryTree createFilledTree() {
+        BinaryTree tree = createEmptyTree(50);
+        tree.insert(25);
+        tree.insert(35);
+        tree.insert(15);
+        tree.insert(75);
+        tree.insert(65);
+        tree.insert(85);
+        tree.insert(100);
+        tree.insert(105);
+        tree.insert(110);
+        tree.insert(115);
+        tree.insert(10);
+        tree.insert(52);
+        tree.insert(1);
+        tree.insert(113);
         return tree;
 /*
                        50
@@ -39,72 +39,85 @@ public class Tests {
     }
 
     @Test
-    public void FindParentAndChildrenTest() {
-        BinaryTree tree = CreateFilledTree();
+    public void findParentAndChildrenTest() {
+        BinaryTree tree = createFilledTree();
         int[] actual = new int[]{
-                tree.FindRightChild(75).getValue(),
-                tree.FindRightChild(50).getValue(),
-                tree.FindLeftChild(25).getValue(),
-                tree.FindLeftChild(115).getValue(),
-                tree.FindParent(52).getValue(),
-                tree.FindParent(35).getValue(),
-                tree.FindParent(105).getValue(),
+                tree.findRightChild(75).getValue(),
+                tree.findRightChild(50).getValue(),
+                tree.findLeftChild(25).getValue(),
+                tree.findLeftChild(115).getValue(),
+                tree.findParent(52).getValue(),
+                tree.findParent(35).getValue(),
+                tree.findParent(105).getValue(),
         };
         int[] expected = new int[]{85, 75, 15, 113, 65, 25, 100};
         Assert.assertArrayEquals(actual, expected);
-        tree = CreateEmptyTree(10);
-        Assert.assertNull(tree.FindParent(10));
-        Assert.assertNull(tree.FindLeftChild(10));
-        Assert.assertNull(tree.FindRightChild(10));
+        tree = createEmptyTree(10);
+        Assert.assertNull(tree.findParent(10));
+        Assert.assertNull(tree.findLeftChild(10));
+        Assert.assertNull(tree.findRightChild(10));
     }
 
     @Test(expected = IllegalStateException.class)
     public void FRCExceptionTest() {
-        BinaryTree tree = CreateFilledTree();
-        tree.FindLeftChild(5);
+        BinaryTree tree = createFilledTree();
+        tree.findLeftChild(5);
     }
 
     @Test(expected = IllegalStateException.class)
     public void FPExceptionTest() {
-        BinaryTree tree = CreateFilledTree();
-        tree.FindLeftChild(5);
+        BinaryTree tree = createFilledTree();
+        tree.findLeftChild(5);
     }
 
     @Test
-    public void SearchTest() {
-        BinaryTree tree = CreateFilledTree();
+    public void searchTest() {
+        BinaryTree tree = createFilledTree();
         int[] actual = new int[]{
-                tree.Search(100).getValue(),
-                tree.Search(105).getValue(),
-                tree.Search(110).getValue(),
-                tree.Search(115).getValue()
+                tree.search(100).getValue(),
+                tree.search(105).getValue(),
+                tree.search(110).getValue(),
+                tree.search(115).getValue()
         };
         int[] expected = new int[]{100, 105, 110, 115};
         Assert.assertArrayEquals(actual, expected);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void SearchExceptionTest() {
-        BinaryTree tree = CreateEmptyTree(10);
-        tree.Search(2);
+    public void searchExceptionTest() {
+        BinaryTree tree = createEmptyTree(10);
+        tree.search(2);
     }
 
     @Test
-    public void RemoveTest(){
-        BinaryTree tree = CreateFilledTree();
-        Assert.assertEquals(75, tree.FindRightChild(50).getValue());
-        tree.Remove(75);
-        Assert.assertEquals(85, tree.FindRightChild(50).getValue());
-        tree.Remove(50);
-        Assert.assertEquals(52, tree.FindParent(25).getValue());
-        tree.Remove(1);
-        Assert.assertNull(tree.FindLeftChild(10));
+    public void removeTest() {
+        BinaryTree tree = createFilledTree();
+        Assert.assertEquals(75, tree.findRightChild(50).getValue());
+        tree.remove(75);
+        Assert.assertEquals(85, tree.findRightChild(50).getValue());
+        tree.remove(50);
+        Assert.assertEquals(52, tree.findParent(25).getValue());
+        tree.remove(1);
+        Assert.assertNull(tree.findLeftChild(10));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void RemoveExceptionTest(){
-        BinaryTree tree = CreateEmptyTree(10);
-        tree.Remove(2);
+    public void removeExceptionTest() {
+        BinaryTree tree = createEmptyTree(10);
+        tree.remove(2);
+    }
+
+    @Test
+    public void equalsTest() {
+        BinaryTree tree1 = createEmptyTree(10);
+        BinaryTree tree2 = createEmptyTree(10);
+        Assert.assertEquals(tree1.search(10), tree2.search(10));
+        tree1.insert(5);
+        tree1.insert(15);
+        Assert.assertNotEquals(tree1.search(10), tree2.search(10));
+        tree2.insert(5);
+        tree2.insert(15);
+        Assert.assertEquals(tree1.search(10), tree2.search(10));
     }
 
 }
