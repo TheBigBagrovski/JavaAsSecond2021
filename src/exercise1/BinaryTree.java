@@ -184,8 +184,10 @@ class Node {
         final int x = 31;
         int result = 1;
         result = x * result + value;
-        result = x * result + leftChild.value;
-        result = x * result + rightChild.value;
+        if (leftChild != null)
+            result = x * result + leftChild.value;
+        if (rightChild != null)
+            result = x * result + rightChild.value;
         return result;
     }
 
