@@ -1,5 +1,7 @@
-package exercise1;
+package tests;
 
+import exercise1.BinaryTree;
+import exercise1.Node;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -109,15 +111,21 @@ public class Tests {
 
     @Test
     public void equalsTest() {
-        BinaryTree tree1 = createEmptyTree(10);
-        BinaryTree tree2 = createEmptyTree(10);
-        Assert.assertEquals(tree1.search(10), tree2.search(10));
-        tree1.insert(5);
-        tree1.insert(15);
-        Assert.assertNotEquals(tree1.search(10), tree2.search(10));
-        tree2.insert(5);
-        tree2.insert(15);
-        Assert.assertEquals(tree1.search(10), tree2.search(10));
+        BinaryTree tree1 = createEmptyTree(3);
+        BinaryTree tree2 = createEmptyTree(3);
+        Assert.assertEquals(tree1.search(3), tree2.search(3));
+        tree1.insert(1);
+        tree1.insert(4);
+        Assert.assertNotEquals(tree1.search(3), tree2.search(3));
+        tree2.insert(1);
+        tree2.insert(4);
+        Assert.assertEquals(tree1.search(3), tree2.search(3));
+        tree2.insert(0);
+        tree2.insert(2);
+        Assert.assertNotEquals(tree1.search(3), tree2.search(3));
+        tree1.insert(0);
+        tree1.insert(2);
+        Assert.assertEquals(tree1.search(3), tree2.search(3));
     }
 
 }

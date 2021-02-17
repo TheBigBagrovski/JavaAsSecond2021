@@ -11,7 +11,12 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDirs = ['src']
+            srcDirs = ["src/exercise1"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ["src/tests"]
         }
     }
 }
@@ -20,4 +25,5 @@ dependencies {
 }
 test {
     useJUnitPlatform()
+    testLogging{events "passed", "skipped", "failed"}
 }
