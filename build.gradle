@@ -16,12 +16,14 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ["src/tests"]
+            srcDirs = ["src/exercise1"]
         }
     }
 }
 dependencies {
-    compile 'junit:junit:4.12'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 test {
     useJUnitPlatform()
