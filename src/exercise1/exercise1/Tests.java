@@ -1,9 +1,7 @@
-package tests;
+package exercise1;
 
-import exercise1.BinaryTree;
-import exercise1.Node;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Tests {
 
@@ -53,23 +51,23 @@ public class Tests {
                 tree.findParent(105).getValue(),
         };
         int[] expected = new int[]{85, 75, 15, 113, 65, 25, 100};
-        Assert.assertArrayEquals(actual, expected);
+        assertArrayEquals(actual, expected);
         tree = createEmptyTree(10);
-        Assert.assertNull(tree.findParent(10));
-        Assert.assertNull(tree.findLeftChild(10));
-        Assert.assertNull(tree.findRightChild(10));
+        assertNull(tree.findParent(10));
+        assertNull(tree.findLeftChild(10));
+        assertNull(tree.findRightChild(10));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void FRCExceptionTest() {
         BinaryTree tree = createFilledTree();
-        tree.findLeftChild(5);
+        assertThrows(IllegalStateException.class, () -> tree.findRightChild(5));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void FPExceptionTest() {
         BinaryTree tree = createFilledTree();
-        tree.findLeftChild(5);
+        assertThrows(IllegalStateException.class, () -> tree.findParent(5));
     }
 
     @Test
@@ -82,50 +80,50 @@ public class Tests {
                 tree.search(115).getValue()
         };
         int[] expected = new int[]{100, 105, 110, 115};
-        Assert.assertArrayEquals(actual, expected);
+        assertArrayEquals(actual, expected);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void searchExceptionTest() {
         BinaryTree tree = createEmptyTree(10);
-        tree.search(2);
+        assertThrows(IllegalStateException.class, () -> tree.search(2));
     }
 
     @Test
     public void removeTest() {
         BinaryTree tree = createFilledTree();
-        Assert.assertEquals(75, tree.findRightChild(50).getValue());
+        assertEquals(75, tree.findRightChild(50).getValue());
         tree.remove(75);
-        Assert.assertEquals(85, tree.findRightChild(50).getValue());
+        assertEquals(85, tree.findRightChild(50).getValue());
         tree.remove(50);
-        Assert.assertEquals(52, tree.findParent(25).getValue());
+        assertEquals(52, tree.findParent(25).getValue());
         tree.remove(1);
-        Assert.assertNull(tree.findLeftChild(10));
+        assertNull(tree.findLeftChild(10));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void removeExceptionTest() {
         BinaryTree tree = createEmptyTree(10);
-        tree.remove(2);
+        assertThrows(IllegalStateException.class, () -> tree.remove(2));
     }
 
     @Test
     public void equalsTest() {
         BinaryTree tree1 = createEmptyTree(3);
         BinaryTree tree2 = createEmptyTree(3);
-        Assert.assertEquals(tree1.search(3), tree2.search(3));
+        assertEquals(tree1.search(3), tree2.search(3));
         tree1.insert(1);
         tree1.insert(4);
-        Assert.assertNotEquals(tree1.search(3), tree2.search(3));
+        assertNotEquals(tree1.search(3), tree2.search(3));
         tree2.insert(1);
         tree2.insert(4);
-        Assert.assertEquals(tree1.search(3), tree2.search(3));
+        assertEquals(tree1.search(3), tree2.search(3));
         tree2.insert(0);
         tree2.insert(2);
-        Assert.assertNotEquals(tree1.search(3), tree2.search(3));
+        assertNotEquals(tree1.search(3), tree2.search(3));
         tree1.insert(0);
         tree1.insert(2);
-        Assert.assertEquals(tree1.search(3), tree2.search(3));
+        assertEquals(tree1.search(3), tree2.search(3));
     }
 
 }
