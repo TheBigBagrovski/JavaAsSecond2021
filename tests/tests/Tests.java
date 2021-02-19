@@ -1,5 +1,6 @@
-package exercise1;
+package tests;
 
+import code.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
